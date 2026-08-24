@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Scan History{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h1>Scan History</h1>
+        <p>Recent website scans and previous assessment records will appear here.</p>
+
+        <div class="panel" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:18px; margin-top:20px;">
+            <ul style="margin:0; padding-left:20px; line-height:2;">
+                <li>example.com — Low risk</li>
+                <li>portfolio-site.net — Moderate risk</li>
+                <li>admin-panel.local — High risk</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

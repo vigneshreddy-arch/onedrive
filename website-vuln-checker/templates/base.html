@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Website Vulnerability Scanner{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f7ff, #edf3fb);
+            color: #1f2937;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #020817, #0f172a);
+            color: #e2e8f0;
+        }
+        .app-shell {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #0f172a;
+            color: white;
+            padding: 28px 20px;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+            letter-spacing: 0.08em;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            background: rgba(148, 163, 184, 0.08);
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .nav a.active {
+            background: #2563eb;
+            color: white;
+        }
+        .main-panel {
+            padding: 28px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            margin-bottom: 24px;
+            padding: 24px;
+        }
+        body.dark-mode .card,
+        body.dark-mode .page-card,
+        body.dark-mode .panel {
+            background: #111827;
+            color: #e2e8f0;
+            border-color: #1f2937;
+            box-shadow: none;
+        }
+        .toggle-wrap {
+            margin-top: 26px;
+        }
+        .toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: rgba(148, 163, 184, 0.08);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-weight: 600;
+        }
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            display: inline-block;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #666;
+            border-radius: 999px;
+            transition: 0.3s ease;
+        }
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 4px;
+            top: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s ease;
+        }
+        .switch input:checked + .slider {
+            background: #2563eb;
+        }
+        .switch input:checked + .slider::before {
+            transform: translateX(22px);
+        }
+        @media (max-width: 760px) {
+            .app-shell { grid-template-columns: 1fr; }
+            .sidebar { padding-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <h3>Security Hub</h3>
+            <nav class="nav">
+                <a href="/" class="{% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="/history" class="{% if active_page == 'history' %}active{% endif %}">Scan History</a>
+                <a href="/reports" class="{% if active_page == 'reports' %}active{% endif %}">Reports</a>
+                <a href="/settings" class="{% if active_page == 'settings' %}active{% endif %}">Settings</a>
+            </nav>
+
+            <div class="toggle-wrap">
+                <div class="toggle">
+                    <span>Dark mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('darkMode');
+        if (savedTheme === 'enabled') {
+            document.body.classList.add('dark-mode');
+            toggle.checked = true;
+        }
+
+        toggle.addEventListener('change', () => {
+            const enabled = toggle.checked;
+            document.body.classList.toggle('dark-mode', enabled);
+            localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+﻿*
+!website-vuln-checker/
+!website-vuln-checker/**
+!.gitignore
